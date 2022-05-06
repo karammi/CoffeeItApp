@@ -18,7 +18,6 @@ object DatabaseModule {
     fun provideCoffeeItDatabase(
         @ApplicationContext context: Context,
     ): CoffeeItDatabase =
-        Room
-            .databaseBuilder(context, CoffeeItDatabase::class.java, Util.DATA_BASE_NAME)
+        Room.databaseBuilder(context, CoffeeItDatabase::class.java, Util.DATA_BASE_NAME)
             .build()
 }
