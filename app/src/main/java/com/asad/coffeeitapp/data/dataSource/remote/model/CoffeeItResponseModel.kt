@@ -1,4 +1,4 @@
-package com.asad.coffeeitapp.data.dataSource.local.model
+package com.asad.coffeeitapp.data.dataSource.remote.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
