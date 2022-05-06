@@ -1,7 +1,7 @@
-package com.asad.coffeeitapp.di.module
+package com.asad.coffeeitapp.core.di.module
 
 import com.asad.coffeeitapp.BuildConfig
-import com.asad.coffeeitapp.di.Util
+import com.asad.coffeeitapp.core.di.Util
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
