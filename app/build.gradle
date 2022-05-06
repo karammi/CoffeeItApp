@@ -1,8 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
+    id "io.gitlab.arturbosch.detekt"
 }
-
+apply plugin: 'kotlin-android'
 android {
     compileSdk 32
 
@@ -58,4 +63,58 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    // accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    // datastore
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
+    // moshi
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+    // navigation
+    implementation "androidx.navigation:navigation-compose:$navigation_compose_version"
+
+    // pager
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    // If using indicators, also depend on
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+
+    // constraint layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
+
+    // icons
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    //swipe refresh
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
+
+
+    implementation("io.coil-kt:coil:$coil_version")
+    implementation("io.coil-kt:coil-compose:$coil_version")
+
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // swipe refresh
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
+
+    implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
+
+
 }
