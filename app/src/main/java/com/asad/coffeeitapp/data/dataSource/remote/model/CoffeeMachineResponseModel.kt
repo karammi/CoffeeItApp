@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CoffeeItResponseModel(
+data class CoffeeMachineResponseModel(
     @Json(name = "_id")
     val id: String,
     @Json(name = "types")
