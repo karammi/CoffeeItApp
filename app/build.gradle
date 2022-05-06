@@ -116,5 +116,20 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
 
+    // For Robolectric tests.
+    testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+    // ...with Kotlin.
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+    // ...with Java.
+    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.38.1'
+
+
+    // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+    // ...with Java.
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.38.1'
+
 
 }
