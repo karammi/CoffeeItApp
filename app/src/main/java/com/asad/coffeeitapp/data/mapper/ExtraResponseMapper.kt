@@ -3,8 +3,10 @@ package com.asad.coffeeitapp.data.mapper
 import com.asad.coffeeitapp.core.ResponseMapper
 import com.asad.coffeeitapp.data.dataSource.remote.model.ExtraResponseModel
 import com.asad.coffeeitapp.domain.model.ExtraModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
+@ViewModelScoped
 class ExtraResponseMapper @Inject constructor(
     private val subSelectionResponseMapper: SubSelectionResponseMapper,
 ) : ResponseMapper<ExtraModel, ExtraResponseModel> {
@@ -19,7 +21,7 @@ class ExtraResponseMapper @Inject constructor(
     }
 
     override fun mapFromModel(model: ExtraModel): ExtraResponseModel {
-        return with(model){
+        return with(model) {
             ExtraResponseModel(
                 id,
                 name,
