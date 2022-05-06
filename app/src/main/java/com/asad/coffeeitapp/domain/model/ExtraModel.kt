@@ -1,12 +1,7 @@
-package com.asad.coffeeitapp.data.dataSource.local.entity
+package com.asad.coffeeitapp.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "extra_tbl")
-data class ExtraEntity(
-    @PrimaryKey(autoGenerate = false)
+data class ExtraModel(
     val id: String,
     val name: String,
-    val subSelectionEntities: List<SubSelectionEntity>,
+    val subSelectionModels: List<SubSelectionModel>,
 )

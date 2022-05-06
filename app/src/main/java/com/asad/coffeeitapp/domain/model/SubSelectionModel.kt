@@ -1,11 +1,6 @@
-package com.asad.coffeeitapp.data.dataSource.local.entity
+package com.asad.coffeeitapp.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "sub_selection_tbl")
-data class SubSelectionEntity(
-    @PrimaryKey(autoGenerate = false)
+data class SubSelectionModel(
     val id: String,
     val name: String,
 )

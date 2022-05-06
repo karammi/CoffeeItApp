@@ -1,11 +1,6 @@
-package com.asad.coffeeitapp.data.dataSource.local.entity
+package com.asad.coffeeitapp.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "size_tbl")
-data class SizeEntity(
-    @PrimaryKey(autoGenerate = false)
+data class SizeModel(
     val id: String,
     val name: String,
     val v: Int? = null,
