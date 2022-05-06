@@ -1,4 +1,7 @@
 package com.asad.coffeeitapp
 
-class CoffeeItApp {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class CoffeeItApp : Application()
