@@ -5,9 +5,9 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class CoffeeMachineDataSourceImpl @Inject constructor(
+class CoffeeMachineRemoteDataSourceImpl @Inject constructor(
     private val coffeeMachineAPI: CoffeeMachineAPI,
-) : CoffeeMachineDataSource {
+) : CoffeeMachineRemoteDataSource {
     override suspend fun fetchCoffeeMachineInfo(id: String): Result<CoffeeMachineResponseModel> {
         return try {
             val response = coffeeMachineAPI.fetchCoffeeMachineInfo(id = id)
