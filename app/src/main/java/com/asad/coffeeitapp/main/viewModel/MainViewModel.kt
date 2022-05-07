@@ -6,6 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CoffeeMachineViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val repository: CoffeeMachineRepository,
 ) : ViewModel()
