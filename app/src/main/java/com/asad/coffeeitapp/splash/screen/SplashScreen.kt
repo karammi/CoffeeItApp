@@ -23,9 +23,10 @@ fun SplashScreenContent() {
             Text(text = "Dark Roasted Beans")
             Text(text = "Tab the machine to start")
             Image(
-                painter = painterResource(id = R.drawable.near_device),
+                painter = painterResource(id = R.drawable.ic_frame_3),
                 contentDescription = "device",
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .fillMaxSize()
             )
         }
     }
