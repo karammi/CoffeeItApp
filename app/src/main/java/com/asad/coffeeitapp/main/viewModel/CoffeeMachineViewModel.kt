@@ -1,4 +1,4 @@
-package com.asad.coffeeitapp.presentation.viewModel
+package com.asad.coffeeitapp.main.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.asad.coffeeitapp.domain.repository.CoffeeMachineRepository
