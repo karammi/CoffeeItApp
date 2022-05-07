@@ -1,4 +1,4 @@
-package com.asad.coffeeitapp.ui.theme
+package com.asad.coffeeitapp.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

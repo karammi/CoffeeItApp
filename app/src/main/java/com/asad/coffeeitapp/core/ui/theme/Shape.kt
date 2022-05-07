@@ -1,4 +1,4 @@
-package com.asad.coffeeitapp.ui.theme
+package com.asad.coffeeitapp.core.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
