@@ -3,10 +3,9 @@ package com.asad.coffeeitapp.data.mapper
 import com.asad.coffeeitapp.core.ResponseMapper
 import com.asad.coffeeitapp.data.dataSource.remote.model.CoffeeMachineResponseModel
 import com.asad.coffeeitapp.domain.model.CoffeeMachineModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-@ViewModelScoped
+// @ViewModelScoped
 class CoffeeMachineResponseMapper @Inject constructor(
     private val typeResponseMapper: TypeResponseMapper,
     private val sizeResponseMapper: SizeResponseMapper,

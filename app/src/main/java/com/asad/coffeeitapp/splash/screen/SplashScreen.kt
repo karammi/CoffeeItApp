@@ -20,10 +20,23 @@ fun SplashScreen(navController: NavController) {
 
 @Composable
 fun SplashScreenContent(navController: NavController) {
+
     Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(text = "Dark Roasted Beans")
             Text(text = "Tab the machine to start")
+//            Box(modifier = Modifier.weight(1f)) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_coffee_machine),
+//                    contentDescription = "coffee",
+//                    modifier = Modifier.align(Alignment.BottomCenter)
+//
+//                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_nfc_device),
+//                    contentDescription = "nfc"
+//                )
+//            }
             Image(
                 painter = painterResource(id = R.drawable.ic_frame_3),
                 contentDescription = "device",
