@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,9 @@ fun ExtraScreenContent(navController: NavController, mainViewModel: MainViewMode
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn {
+            item {
+                Text(text = "Select your Extra")
+            }
             items(extra!!.size) { index ->
                 ExtraCardItem(
                     extraItem = extra!![index],

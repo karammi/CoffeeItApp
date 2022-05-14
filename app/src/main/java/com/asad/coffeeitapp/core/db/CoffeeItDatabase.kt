@@ -16,13 +16,13 @@ import com.asad.coffeeitapp.data.dataSource.local.entity.*
     version = 2
 )
 abstract class CoffeeItDatabase : RoomDatabase() {
-    abstract fun provideCoffeeItDao(): CoffeeMachineDao
-
-    abstract fun provideTypeDao(): TypeDao
-
-    abstract fun provideSizeDao(): SizeDao
-
-    abstract fun provideExtraDao(): ExtraDao
-
-    abstract fun provideSubSelectionDao(): SubSelectionDao
+//    abstract fun provideCoffeeItDao(): CoffeeMachineDao
+//
+//    abstract fun provideTypeDao(): TypeDao
+//
+//    abstract fun provideSizeDao(): SizeDao
+//
+//    abstract fun provideExtraDao(): ExtraDao
+//
+//    abstract fun provideSubSelectionDao(): SubSelectionDao
 }

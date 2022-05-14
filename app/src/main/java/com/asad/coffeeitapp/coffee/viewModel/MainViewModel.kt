@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.UiState
-import com.asad.coffeeitapp.domain.model.*
+import com.asad.coffeeitapp.core.data
+import com.asad.coffeeitapp.domain.model.ExtraModel
+import com.asad.coffeeitapp.domain.model.SizeModel
+import com.asad.coffeeitapp.domain.model.SubSelectionModel
+import com.asad.coffeeitapp.domain.model.TypeModel
 import com.asad.coffeeitapp.domain.repository.CoffeeMachineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,19 +17,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "MAIN_VIEW_MODEL"
-
-data class MainUiState(
-    val coffeeMachine: UiState<CoffeeMachineModel, String> = UiState.Loading,
-    val isLoading: Boolean = false,
-    val selectedStyle: UiState<TypeModel, String> = UiState.Empty,
-    val selectedSize: UiState<SizeModel, String> = UiState.Empty,
-    val selectedExtra: UiState<ExtraModel, String> = UiState.Empty,
-    val selectedSubSelection: UiState<SubSelectionModel, String> = UiState.Empty,
-    val navigateTo: String? = null,
-    val sizeList: List<SizeModel>? = mutableListOf(),
-//    val extraList: List<ExtraModel>? = mutableListOf(),
-    val extraList: List<ExtraModel>? = mutableListOf(),
-)
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -37,6 +28,8 @@ class MainViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val response = repository.fetchCoffeeMachineInfo(id = "60ba1ab72e35f2d9c786c610")
+            println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+            println(response.data)
             when (response) {
                 is Result.Error -> {
                     Log.d(TAG, response.apiErrorBody.message.toString())

@@ -20,35 +20,9 @@ data class ApiErrorBody(
     val error: String? = null,
 )
 
-class ErrorHandler @Inject constructor(
-    private val retrofitConverter: Converter<ResponseBody, ApiErrorBody>,
-) {
-
-    fun convertToApiErrorBody(e: Exception): ApiErrorBody {
-        return when (e) {
-            is HttpException -> {
-                var errorBody: ApiErrorBody? = null
-                e.response()?.errorBody()?.let {
-                    errorBody = retrofitConverter.convert(it)
-                }
-                if (errorBody != null) {
-                    errorBody!!.copy(
-                        message = errorBody!!.message ?: "Connection Error",
-                    )
-                } else {
-                    ApiErrorBody(message = "ConnectionError")
-                }
-            }
-            is IOException -> ApiErrorBody(message = "IO Exception Error")
-            is SocketTimeoutException -> ApiErrorBody(message = "Poor Connection(Socket Timeout Error)")
-            is UnknownHostException -> ApiErrorBody(message = "Unknown Error")
-            else -> ApiErrorBody(message = "Error")
-        }
-    }
-}
 
 class ApiRunner @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: CustomErrorHandler,
 ) {
     suspend fun <T> invokeSuspended(job: suspend () -> T): Result<T> {
         return try {

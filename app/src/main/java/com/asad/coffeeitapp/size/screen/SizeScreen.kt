@@ -28,7 +28,7 @@ fun SizeScreenContent(navController: NavController, mainViewModel: MainViewModel
 
     Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Select your Style")
+            Text(text = "Select your Size")
             LazyColumn {
                 uiState.value.sizeList?.size?.let { list ->
                     items(list) { index ->

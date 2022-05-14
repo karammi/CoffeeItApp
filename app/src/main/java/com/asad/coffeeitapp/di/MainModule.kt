@@ -1,7 +1,5 @@
 package com.asad.coffeeitapp.di
 
-import com.asad.coffeeitapp.core.db.CoffeeItDatabase
-import com.asad.coffeeitapp.data.dataSource.local.dao.*
 import com.asad.coffeeitapp.data.dataSource.remote.CoffeeMachineAPI
 import dagger.Module
 import dagger.Provides
@@ -19,7 +17,7 @@ object MainModule {
     fun provideCoffeeMachineAPI(retrofit: Retrofit): CoffeeMachineAPI =
         retrofit.create(CoffeeMachineAPI::class.java)
 
-    @Provides
+/*    @Provides
     @Singleton
     fun provideCoffeeMachineDao(coffeeItDatabase: CoffeeItDatabase): CoffeeMachineDao {
         return coffeeItDatabase.provideCoffeeItDao()
@@ -47,5 +45,5 @@ object MainModule {
     @Singleton
     fun provideSubSelectionDao(coffeeItDatabase: CoffeeItDatabase): SubSelectionDao {
         return coffeeItDatabase.provideSubSelectionDao()
-    }
+    }*/
 }

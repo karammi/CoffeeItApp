@@ -69,6 +69,8 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
             }
         }
     ) {
+        Text(text = "Overview")
+
         Box(
             modifier = Modifier
                 .padding(16.dp)

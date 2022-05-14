@@ -2,6 +2,7 @@ package com.asad.coffeeitapp.data.repository
 
 import com.asad.coffeeitapp.core.ResponseMapper
 import com.asad.coffeeitapp.core.Result
+import com.asad.coffeeitapp.core.data
 import com.asad.coffeeitapp.data.dataSource.local.CoffeeMachineLocalDataSource
 import com.asad.coffeeitapp.data.dataSource.local.entity.*
 import com.asad.coffeeitapp.data.dataSource.remote.CoffeeMachineRemoteDataSource
@@ -18,7 +19,6 @@ class CoffeeMachineRepositoryImpl @Inject constructor(
 ) : CoffeeMachineRepository {
     override suspend fun fetchCoffeeMachineInfo(id: String): Result<CoffeeMachineModel> {
         val temp = coffeeMachineRemoteDataSource.fetchCoffeeMachineInfo(id)
-
         return when (temp) {
             is Result.Error -> Result.Error(temp.apiErrorBody)
             Result.Loading -> Result.Loading
