@@ -29,7 +29,6 @@ fun <T> CoffeeCardItem(
             .height(90.dp)
             .shadow(2.dp, shape = RoundedCornerShape(8.dp))
             .background(Color(0xFFAED7A0))
-//            .padding(16.dp)
             .noRippleClickable {
                 onItemClicked(item)
             },

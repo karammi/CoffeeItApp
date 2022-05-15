@@ -54,7 +54,8 @@ fun ExtraCardItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeight(90.dp)
+                .padding(horizontal = 24.dp)
+                .requiredHeight(80.dp)
                 .noRippleClickable {
                     showSubSelection = !showSubSelection
                 },

@@ -94,7 +94,9 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
             }
         }
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
             Text(
                 text = "Overview",
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -110,7 +112,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
 
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp)
                 ) {
                     Row(
                         modifier = Modifier
@@ -124,7 +126,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         )
                     ) {
                         Image(
-                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            painter = painterResource(id = R.drawable.ic_cappuchino),
                             contentDescription = "coffee"
                         )
                         Text(
@@ -137,7 +139,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                             text = "Edit",
                             color = Color.White,
                             modifier = Modifier.noRippleClickable {
-                                navController.navigate(Screen.MainScreen.route)
+                                navController.popBackStack(route = Screen.MainScreen.route, false)
                             }
                         )
                     }
@@ -156,7 +158,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         )
                     ) {
                         Image(
-                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            painter = painterResource(id = R.drawable.ic_cappuchino),
                             contentDescription = "coffee"
                         )
                         Text(
@@ -169,7 +171,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                             text = "Edit",
                             color = Color.White,
                             modifier = Modifier.noRippleClickable {
-                                navController.navigate(Screen.SizeScreen.route)
+                                navController.popBackStack(Screen.SizeScreen.route, false)
                             }
                         )
                     }
@@ -188,7 +190,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         )
                     ) {
                         Image(
-                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            painter = painterResource(id = R.drawable.ic_cappuchino),
                             contentDescription = "coffee"
                         )
                         Text(
@@ -201,12 +203,12 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                             text = "Edit",
                             color = Color.White,
                             modifier = Modifier.noRippleClickable {
-                                navController.navigate(Screen.ExtraScreen.route)
+                                navController.popBackStack(Screen.ExtraScreen.route, false)
                             }
                         )
                     }
 
-                    Divider(color = Color.White)
+                    Divider(color = Color.White, modifier = Modifier.padding(bottom = 8.dp))
 
                     Row(
                         modifier = Modifier
