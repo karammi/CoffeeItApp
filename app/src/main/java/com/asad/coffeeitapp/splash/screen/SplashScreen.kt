@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
 import com.asad.coffeeitapp.Screen
+import com.asad.coffeeitapp.core.TestTags
 import com.asad.coffeeitapp.extra.screen.noRippleClickable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
@@ -88,7 +89,6 @@ fun SplashScreenContent(navController: NavController) {
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
-
         ) {
 
             Text(
@@ -103,14 +103,14 @@ fun SplashScreenContent(navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_coffee_machine),
-                    contentDescription = "coffee",
+                    contentDescription = TestTags.Splash_Screen_CoffeeMachine,
                     modifier = Modifier.align(Alignment.CenterStart)
                         .requiredWidth(screenWidth.times(0.95f)),
                     contentScale = ContentScale.FillBounds,
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_nfc_device),
-                    contentDescription = "nfc",
+                    contentDescription = TestTags.Splash_Screen_NFC,
                     modifier = Modifier.align(Alignment.CenterEnd).graphicsLayer {
                         translationX = phoneTranslationX
                     }
@@ -123,9 +123,10 @@ fun SplashScreenContent(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 24.dp)
                     .weight(0.2f)
-                    .align(alignment = Alignment.CenterHorizontally),
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .noRippleClickable {
+                    },
                 textDecoration = TextDecoration.Underline,
-
             )
         }
     }

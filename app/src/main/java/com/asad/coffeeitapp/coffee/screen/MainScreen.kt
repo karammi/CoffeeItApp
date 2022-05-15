@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -17,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
+import com.asad.coffeeitapp.core.TestTags
 import com.asad.coffeeitapp.core.UiState
 import com.asad.coffeeitapp.core.ui.CoffeeCardItem
 import com.asad.coffeeitapp.extra.screen.noRippleClickable
@@ -55,10 +58,13 @@ fun MainScreen(
                     )
                     Text(
                         text = "Brew with Lex",
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                            .semantics {
+                                contentDescription = TestTags.MAIN_SCREEN_TITLE
+                            },
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = Color.Black,
                     )
                 }
             }
@@ -116,7 +122,9 @@ fun SimpleCircularProgressComponent() {
     Column(
         // we are using column to align our
         // imageview to center of the screen.
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
 
         // below line is used for specifying
         // vertical arrangement.
