@@ -16,7 +16,7 @@ import com.asad.coffeeitapp.splash.screen.SplashScreen
 fun CoffeeItGraph() {
     val navController = rememberNavController()
     val mainViewModel: MainViewModel = hiltViewModel()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
         }
