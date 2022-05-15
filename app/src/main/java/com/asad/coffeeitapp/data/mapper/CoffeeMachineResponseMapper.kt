@@ -10,8 +10,8 @@ class CoffeeMachineResponseMapper @Inject constructor(
     private val typeResponseMapper: TypeResponseMapper,
     private val sizeResponseMapper: SizeResponseMapper,
     private val extraResponseMapper: ExtraResponseMapper,
-) :
-    ResponseMapper<CoffeeMachineModel, CoffeeMachineResponseModel> {
+) : ResponseMapper<CoffeeMachineModel, CoffeeMachineResponseModel> {
+
     override fun mapToModel(model: CoffeeMachineResponseModel): CoffeeMachineModel {
         return CoffeeMachineModel(
             model.id,

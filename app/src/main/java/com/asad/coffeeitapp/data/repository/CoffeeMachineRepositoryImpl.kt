@@ -2,10 +2,9 @@ package com.asad.coffeeitapp.data.repository
 
 import com.asad.coffeeitapp.core.ResponseMapper
 import com.asad.coffeeitapp.core.Result
-import com.asad.coffeeitapp.core.data
-import com.asad.coffeeitapp.data.dataSource.local.CoffeeMachineLocalDataSource
 import com.asad.coffeeitapp.data.dataSource.local.entity.*
 import com.asad.coffeeitapp.data.dataSource.remote.CoffeeMachineRemoteDataSource
+import com.asad.coffeeitapp.data.dataSource.remote.model.mapper
 import com.asad.coffeeitapp.data.mapper.CoffeeMachineResponseMapper
 import com.asad.coffeeitapp.domain.model.*
 import com.asad.coffeeitapp.domain.repository.CoffeeMachineRepository
@@ -14,17 +13,15 @@ import javax.inject.Inject
 // @ViewModelScoped
 class CoffeeMachineRepositoryImpl @Inject constructor(
     private val coffeeMachineRemoteDataSource: CoffeeMachineRemoteDataSource,
-    private val coffeeMachineLocalDataSource: CoffeeMachineLocalDataSource,
-    private val coffeeMachineResponseMapper: CoffeeMachineResponseMapper,
+//    private val coffeeMachineLocalDataSource: CoffeeMachineLocalDataSource,
+//    private val coffeeMachineResponseMapper: CoffeeMachineResponseMapper,
 ) : CoffeeMachineRepository {
     override suspend fun fetchCoffeeMachineInfo(id: String): Result<CoffeeMachineModel> {
-        val temp = coffeeMachineRemoteDataSource.fetchCoffeeMachineInfo(id)
-        return when (temp) {
-            is Result.Error -> Result.Error(temp.apiErrorBody)
+        return when (val response = coffeeMachineRemoteDataSource.fetchCoffeeMachineInfo(id)) {
+            is Result.Error -> Result.Error(response.apiErrorBody)
             Result.Loading -> Result.Loading
             is Result.Success -> {
-//                coffeeMachineLocalDataSource.insertCoffeeMachine()
-                Result.Success(coffeeMachineResponseMapper.mapToModel(temp.data))
+                Result.Success(response.data.mapper())
             }
         }
     }
@@ -39,7 +36,6 @@ class CoffeeMachineModelToDataBaseEntityMapper @Inject constructor() :
     override fun mapToModel(model: CoffeeMachineModel): CoffeeMachineEntity {
         return CoffeeMachineEntity(
             model.id,
-
         )
     }
 

@@ -15,4 +15,7 @@ abstract class AppBinderModule {
     @Binds
     @Singleton
     abstract fun bindErrorHandler(customErrorHandler: CustomErrorHandler): ErrorHandler
+
+    @Binds
+    abstract fun bindDispatcherProvider(defaultDispatcher: DefaultDispatcher): DispatcherProvider
 }

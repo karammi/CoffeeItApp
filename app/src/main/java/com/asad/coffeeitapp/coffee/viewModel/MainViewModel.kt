@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.UiState
-import com.asad.coffeeitapp.core.data
+import com.asad.coffeeitapp.core.di.module.DispatcherProvider
 import com.asad.coffeeitapp.domain.model.ExtraModel
 import com.asad.coffeeitapp.domain.model.SizeModel
 import com.asad.coffeeitapp.domain.model.SubSelectionModel
@@ -21,15 +21,14 @@ private const val TAG = "MAIN_VIEW_MODEL"
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: CoffeeMachineRepository,
+    private val dispatcherProvider: DispatcherProvider,
 ) : ViewModel() {
 
     val uiState = MutableStateFlow(MainUiState())
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             val response = repository.fetchCoffeeMachineInfo(id = "60ba1ab72e35f2d9c786c610")
-            println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-            println(response.data)
             when (response) {
                 is Result.Error -> {
                     Log.d(TAG, response.apiErrorBody.message.toString())
@@ -47,7 +46,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun setSelectedStyle(typeModel: TypeModel) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             val sizeList = uiState.value.coffeeMachine.value?.sizeModels?.filter {
                 typeModel.sizes.contains(it.id)
             }
@@ -64,12 +63,10 @@ class MainViewModel @Inject constructor(
                 ),
             )
         }
-        Log.e(TAG, "############test##################")
-        Log.e(TAG, uiState.value.sizeList.toString())
     }
 
     fun setSelectedSize(sizeModel: SizeModel) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             uiState.emit(
                 value = uiState.value.copy(selectedSize = UiState.Success(sizeModel))
             )
@@ -77,7 +74,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun setSelectedExtra(extraModel: ExtraModel, subSelectionModel: SubSelectionModel) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             uiState.emit(
                 value = uiState.value.copy(
                     selectedExtra = UiState.Success(extraModel),

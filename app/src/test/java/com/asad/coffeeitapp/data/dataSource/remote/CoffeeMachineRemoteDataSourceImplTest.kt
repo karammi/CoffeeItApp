@@ -28,7 +28,7 @@ class CoffeeMachineRemoteDataSourceImplTest {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(mockWebServer.url("/"))
+        .baseUrl(mockWebServer.url("localhost:8080"))
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
@@ -48,18 +48,16 @@ class CoffeeMachineRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `fetch coffee machine info should return success response`() {
+    fun `fetch coffee machine info should return success response`() = runBlocking {
         // arrange
         mockWebServer.enqueueResponse("success_response_200.json", code = 200)
         val expected = Result.Success(data = ACTUAL_VALUE)
 
-        runBlocking {
-            // act
-            val actual = sut.fetchCoffeeMachineInfo("60ba1ab72e35f2d9c786c610")
+        // act
+        val actual = sut.fetchCoffeeMachineInfo("60ba1ab72e35f2d9c786c610")
 
-            // assert
-            assertThat(actual).isEqualTo(expected)
-        }
+        // assert
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -79,9 +77,9 @@ class CoffeeMachineRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `fetch incorrect url should return ApiError 400`() {
+    fun `fetch incorrect url should return ApiError 404`() {
         // arrange
-        mockWebServer.enqueueResponse("error_response_404.json", 500)
+        mockWebServer.enqueueResponse("error_response_404.json", 404)
         val errorResult = ApiErrorBody(
             statusCode = "404",
             message = "Cannot GET /coffee-machin/60ba1ab72e35f2d9c786c610",

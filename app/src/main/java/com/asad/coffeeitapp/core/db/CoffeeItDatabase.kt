@@ -2,7 +2,6 @@ package com.asad.coffeeitapp.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.asad.coffeeitapp.data.dataSource.local.dao.*
 import com.asad.coffeeitapp.data.dataSource.local.entity.*
 
 @Database(
