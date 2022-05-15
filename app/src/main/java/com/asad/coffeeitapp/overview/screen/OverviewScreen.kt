@@ -60,7 +60,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         modifier = Modifier.noRippleClickable { navController.navigateUp() }
                     )
                     Text(
-                        text = "Dark Roasted Beans",
+                        text = "Brew with Lex",
                         modifier = Modifier.padding(horizontal = 16.dp),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,

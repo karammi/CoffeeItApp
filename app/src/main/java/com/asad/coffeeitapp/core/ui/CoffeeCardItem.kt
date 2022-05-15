@@ -29,16 +29,17 @@ fun <T> CoffeeCardItem(
             .height(90.dp)
             .shadow(2.dp, shape = RoundedCornerShape(8.dp))
             .background(Color(0xFFAED7A0))
-            .padding(16.dp)
+//            .padding(16.dp)
             .noRippleClickable {
                 onItemClicked(item)
             },
         contentAlignment = Alignment.Center
     ) {
-        Column {
+        Column(modifier = Modifier.fillMaxSize()) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(
                     16.dp,

@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
+import com.asad.coffeeitapp.Screen
+import com.asad.coffeeitapp.extra.screen.noRippleClickable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
@@ -45,9 +46,12 @@ fun SplashScreenContent(navController: NavController) {
 
     val transition = updateTransition(phonePosition, label = "image_transition")
 
-    val phoneTranslationX by transition.animateFloat(label = "phone_translation_x", transitionSpec = {
-        spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessVeryLow)
-    }) { state ->
+    val phoneTranslationX by transition.animateFloat(
+        label = "phone_translation_x",
+        transitionSpec = {
+            spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessVeryLow)
+        }
+    ) { state ->
         when (state) {
             PhonePosition.Start -> 0f
             PhonePosition.End -> 100f
@@ -93,11 +97,15 @@ fun SplashScreenContent(navController: NavController) {
                 fontWeight = FontWeight.Normal,
                 fontSize = 24.sp
             )
-            Box(modifier = Modifier.fillMaxWidth().weight(0.6f)) {
+            Box(
+                modifier = Modifier.fillMaxWidth().weight(0.6f)
+                    .noRippleClickable { navController.navigate(Screen.MainScreen.route) }
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_coffee_machine),
                     contentDescription = "coffee",
-                    modifier = Modifier.align(Alignment.CenterStart).requiredWidth(screenWidth.times(0.95f)),
+                    modifier = Modifier.align(Alignment.CenterStart)
+                        .requiredWidth(screenWidth.times(0.95f)),
                     contentScale = ContentScale.FillBounds,
                 )
                 Image(
