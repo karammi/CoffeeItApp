@@ -1,5 +1,6 @@
 package com.asad.coffeeitapp.splash.screen
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -10,6 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -30,8 +36,27 @@ fun SplashScreenContent(navController: NavController) {
 
     ConfigStatusBar()
 
-    var phonePosition by remember {
-        mutableStateOf(PhonePosition.Left)
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
+    val phonePosition = remember {
+        MutableTransitionState(PhonePosition.End)
+    }
+
+    val transition = updateTransition(phonePosition, label = "image_transition")
+
+    val phoneTranslationX by transition.animateFloat(label = "phone_translation_x", transitionSpec = {
+        spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessVeryLow)
+    }) { state ->
+        when (state) {
+            PhonePosition.Start -> 0f
+            PhonePosition.End -> 100f
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        delay(800)
+        phonePosition.targetState = PhonePosition.Start
     }
 
     Scaffold(
@@ -59,6 +84,7 @@ fun SplashScreenContent(navController: NavController) {
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
+
         ) {
 
             Text(
@@ -67,17 +93,19 @@ fun SplashScreenContent(navController: NavController) {
                 fontWeight = FontWeight.Normal,
                 fontSize = 24.sp
             )
-            Box(modifier = Modifier.fillMaxSize().weight(0.8f)) {
+            Box(modifier = Modifier.fillMaxWidth().weight(0.6f)) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_coffee_machine),
                     contentDescription = "coffee",
-                    modifier = Modifier.align(Alignment.Center)
-
+                    modifier = Modifier.align(Alignment.CenterStart).requiredWidth(screenWidth.times(0.95f)),
+                    contentScale = ContentScale.FillBounds,
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_nfc_device),
                     contentDescription = "nfc",
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.CenterEnd).graphicsLayer {
+                        translationX = phoneTranslationX
+                    }
                 )
             }
 
@@ -96,7 +124,7 @@ fun SplashScreenContent(navController: NavController) {
 }
 
 enum class PhonePosition {
-    Left, Right
+    Start, End
 }
 
 @Composable
