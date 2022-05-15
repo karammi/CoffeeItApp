@@ -76,9 +76,6 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
-    // datastore
-    implementation "androidx.datastore:datastore-preferences:$datastore_version"
-
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
@@ -93,8 +90,6 @@ dependencies {
     // navigation
     implementation "androidx.navigation:navigation-compose:$navigation_compose_version"
 
-    // pager
-    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     // If using indicators, also depend on
     implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
 
@@ -104,12 +99,6 @@ dependencies {
     // icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
-    //swipe refresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
-
-
-    implementation("io.coil-kt:coil:$coil_version")
-    implementation("io.coil-kt:coil-compose:$coil_version")
 
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -120,7 +109,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
 
     // For Robolectric tests.
-    testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.41'
     // ...with Kotlin.
     kaptTest 'com.google.dagger:hilt-android-compiler:2.38.1'
     // ...with Java.
@@ -128,7 +117,7 @@ dependencies {
 
 
     // For instrumented tests.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.41'
     // ...with Kotlin.
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
     // ...with Java.
@@ -144,15 +133,12 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    // optional - Paging 3 Integration
-    implementation "androidx.room:room-paging:2.5.0-alpha01"
-
     // Local unit tests
     testImplementation "androidx.test:core:1.4.0"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     testImplementation "com.google.truth:truth:1.1.3"
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 //    testImplementation "io.mockk:mockk:1.10.5"
     debugImplementation "androidx.compose.ui:ui-test-manifest:1.2.0-beta01"
 
@@ -163,11 +149,16 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:1.1.3"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test:core-ktx:1.4.0'
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 //    androidTestImplementation "io.mockk:mockk-android:1.10.5"
     androidTestImplementation 'androidx.test:runner:1.4.0'
 
     testImplementation 'app.cash.turbine:turbine:0.7.0'
     testImplementation "com.google.truth:truth:1.1.3"
+
+    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+
+//    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+
 
 }
