@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -44,7 +45,7 @@ fun ExtraCardItem(
 
     Column(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 8.dp, horizontal = 16.dp)
             .fillMaxSize()
             .shadow(2.dp, shape = RoundedCornerShape(12.dp))
             .background(Color(0xFFAED7A0))
@@ -54,7 +55,7 @@ fun ExtraCardItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeight(90.dp)
-                .clickable {
+                .noRippleClickable {
                     showSubSelection = !showSubSelection
                 },
             verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +113,7 @@ fun ExtraCardItem(
                             modifier = Modifier.weight(1f)
                         )
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_radio_button_checked),
+                            painter = painterResource(id = R.drawable.ic_radio_button_unchecked),
                             contentDescription = "radio",
                             tint = Color.White
                         )
@@ -120,5 +121,14 @@ fun ExtraCardItem(
                 }
             }
         }
+    }
+}
+
+inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() }
+    ) {
+        onClick()
     }
 }

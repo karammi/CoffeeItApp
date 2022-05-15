@@ -3,13 +3,11 @@ package com.asad.coffeeitapp.overview.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +23,8 @@ import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
+import com.asad.coffeeitapp.extra.screen.noRippleClickable
+import com.asad.coffeeitapp.splash.screen.ConfigStatusBar
 
 @Composable
 fun OverviewScreen(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {
@@ -35,11 +35,40 @@ fun OverviewScreen(navController: NavController, mainViewModel: MainViewModel = 
 fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewModel) {
     val uiState = mainViewModel.uiState.collectAsState()
 
+    ConfigStatusBar()
+
     val extra by remember(uiState.value) {
         derivedStateOf { uiState.value.extraList }
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                backgroundColor = Color.White,
+                elevation = 0.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack, contentDescription = "back",
+                        tint = Color.Black,
+                        modifier = Modifier.noRippleClickable { navController.navigateUp() }
+                    )
+                    Text(
+                        text = "Dark Roasted Beans",
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
+            }
+        },
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             Row(
@@ -48,14 +77,10 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                     .shadow(2.dp, shape = RoundedCornerShape(12.dp))
                     .background(Color(0xFF9BC88B))
                     .fillMaxWidth()
-                    .requiredHeight(80.dp)
+                    .requiredHeight(70.dp)
                     .padding(horizontal = 16.dp)
-                    .clickable(
-                        interactionSource = MutableInteractionSource(),
-                        indication = null,
-                        onClick = {
-                        }
-                    ),
+                    .noRippleClickable {
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -69,141 +94,143 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
             }
         }
     ) {
-        Text(text = "Overview")
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = "Overview",
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                color = Color.Black,
+                fontWeight = FontWeight.Normal,
+                fontSize = 24.sp
+            )
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .shadow(2.dp, shape = RoundedCornerShape(12.dp))
+                    .background(Color(0xFFAED7A0))
 
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .shadow(2.dp, shape = RoundedCornerShape(12.dp))
-                .background(Color(0xFFAED7A0))
-
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .requiredHeight(90.dp)
-                        .clickable {
-                        },
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                    )
+                Column(
+                    modifier = Modifier.padding(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
-                        contentDescription = "coffee"
-                    )
-                    Text(
-                        text = uiState.value.selectedStyle.value?.name ?: "",
-                        color = Color.White,
-                        modifier = Modifier.weight(1f)
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .requiredHeight(90.dp)
+                            .clickable {
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            16.dp,
+                        )
+                    ) {
+                        Image(
+                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            contentDescription = "coffee"
+                        )
+                        Text(
+                            text = uiState.value.selectedStyle.value?.name ?: "",
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
 
-                    Text(
-                        text = "Edit",
-                        color = Color.White,
-                        modifier = Modifier.clickable {
-                            navController.navigate(Screen.MainScreen.route)
-                        }
-                    )
-                }
-
-                Divider(color = Color.White)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .requiredHeight(90.dp)
-                        .clickable {
-                        },
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                    )
-                ) {
-                    Image(
-                        painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
-                        contentDescription = "coffee"
-                    )
-                    Text(
-                        text = uiState.value.selectedSize.value?.name ?: "",
-                        color = Color.White,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Text(
-                        text = "Edit",
-                        color = Color.White,
-                        modifier = Modifier.clickable {
-                            navController.navigate(Screen.SizeScreen.route)
-                        }
-                    )
-                }
-
-                Divider(color = Color.White)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .requiredHeight(90.dp)
-                        .clickable {
-                        },
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                    )
-                ) {
-                    Image(
-                        painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
-                        contentDescription = "coffee"
-                    )
-                    Text(
-                        text = uiState.value.selectedExtra.value?.name ?: "",
-                        color = Color.White,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Text(
-                        text = "Edit",
-                        color = Color.White,
-                        modifier = Modifier.clickable {
-                            navController.navigate(Screen.ExtraScreen.route)
-                        }
-                    )
-                }
-
-                Divider(color = Color.White)
-
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .shadow(1.dp, shape = RoundedCornerShape(8.dp))
-                        .background(Color(0xFF9BC88B))
-                        .fillMaxWidth()
-                        .requiredHeight(60.dp)
-                        .padding(horizontal = 16.dp)
-                        .clickable(
-                            interactionSource = MutableInteractionSource(),
-                            indication = null,
-                            onClick = {
+                        Text(
+                            text = "Edit",
+                            color = Color.White,
+                            modifier = Modifier.noRippleClickable {
+                                navController.navigate(Screen.MainScreen.route)
                             }
-                        ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = uiState.value.selectedSubSelection.value?.name ?: "",
-                        color = Color.White,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_radio_button_checked),
-                        contentDescription = "radio",
-                        tint = Color.White
-                    )
+                        )
+                    }
+
+                    Divider(color = Color.White)
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .requiredHeight(90.dp)
+                            .noRippleClickable {
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            16.dp,
+                        )
+                    ) {
+                        Image(
+                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            contentDescription = "coffee"
+                        )
+                        Text(
+                            text = uiState.value.selectedSize.value?.name ?: "",
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        Text(
+                            text = "Edit",
+                            color = Color.White,
+                            modifier = Modifier.noRippleClickable {
+                                navController.navigate(Screen.SizeScreen.route)
+                            }
+                        )
+                    }
+
+                    Divider(color = Color.White)
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .requiredHeight(90.dp)
+                            .clickable {
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            16.dp,
+                        )
+                    ) {
+                        Image(
+                            painter = painterResource(id = com.asad.coffeeitapp.R.drawable.ic_cappuchino),
+                            contentDescription = "coffee"
+                        )
+                        Text(
+                            text = uiState.value.selectedExtra.value?.name ?: "",
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        Text(
+                            text = "Edit",
+                            color = Color.White,
+                            modifier = Modifier.noRippleClickable {
+                                navController.navigate(Screen.ExtraScreen.route)
+                            }
+                        )
+                    }
+
+                    Divider(color = Color.White)
+
+                    Row(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .shadow(1.dp, shape = RoundedCornerShape(8.dp))
+                            .background(Color(0xFF9BC88B))
+                            .fillMaxWidth()
+                            .requiredHeight(60.dp)
+                            .padding(horizontal = 16.dp)
+                            .noRippleClickable { },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = uiState.value.selectedSubSelection.value?.name ?: "",
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_radio_button_checked),
+                            contentDescription = "radio",
+                            tint = Color.White
+                        )
+                    }
                 }
             }
         }
