@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
-import com.asad.coffeeitapp.splash.screen.ConfigStatusBar
+import com.asad.coffeeitapp.core.ui.ConfigStatusBar
 
 private const val TAG = "EXTRA_SCREEN"
 

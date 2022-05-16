@@ -23,8 +23,8 @@ import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
+import com.asad.coffeeitapp.core.ui.ConfigStatusBar
 import com.asad.coffeeitapp.extra.screen.noRippleClickable
-import com.asad.coffeeitapp.splash.screen.ConfigStatusBar
 
 @Composable
 fun OverviewScreen(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {

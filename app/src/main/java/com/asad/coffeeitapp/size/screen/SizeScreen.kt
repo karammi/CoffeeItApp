@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
 import com.asad.coffeeitapp.core.ui.CoffeeCardItem
-import com.asad.coffeeitapp.splash.screen.ConfigStatusBar
+import com.asad.coffeeitapp.core.ui.ConfigStatusBar
 
 @Composable
 fun SizeScreen(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {

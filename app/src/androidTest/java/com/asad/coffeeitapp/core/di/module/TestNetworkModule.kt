@@ -62,7 +62,7 @@ object TestNetworkModule {
         moshiConverterFactory: MoshiConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Util.BASE_URL_TEST)
+            .baseUrl("${Util.BASE_URL_TEST}${Util.URL_PORT}")
             .client(client)
             .addConverterFactory(moshiConverterFactory)
             .build()

@@ -133,14 +133,22 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
+    debugImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+
     // Local unit tests
     testImplementation "androidx.test:core:1.4.0"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     testImplementation "com.google.truth:truth:1.1.3"
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
-//    testImplementation "io.mockk:mockk:1.10.5"
+
+    def mockk = "1.12.2"
+
+    testImplementation "io.mockk:mockk:$mockk"
+    testImplementation "io.mockk:mockk-agent-jvm:$mockk"
+
     debugImplementation "androidx.compose.ui:ui-test-manifest:1.2.0-beta01"
+
 
     // Instrumentation tests
     androidTestImplementation "junit:junit:4.13.2"
@@ -151,14 +159,17 @@ dependencies {
     androidTestImplementation 'androidx.test:core-ktx:1.4.0'
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 //    androidTestImplementation "io.mockk:mockk-android:1.10.5"
+    androidTestImplementation "io.mockk:mockk:$mockk"
+    androidTestImplementation "io.mockk:mockk-agent-jvm:$mockk"
+
     androidTestImplementation 'androidx.test:runner:1.4.0'
 
     testImplementation 'app.cash.turbine:turbine:0.7.0'
     testImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation 'app.cash.turbine:turbine:0.7.0'
+    androidTestImplementation "com.google.truth:truth:1.1.3"
 
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
-
-//    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
 
 }

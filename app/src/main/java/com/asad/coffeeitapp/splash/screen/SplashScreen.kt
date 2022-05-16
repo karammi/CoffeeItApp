@@ -2,12 +2,14 @@ package com.asad.coffeeitapp.splash.screen
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,8 +26,8 @@ import androidx.navigation.NavController
 import com.asad.coffeeitapp.R
 import com.asad.coffeeitapp.Screen
 import com.asad.coffeeitapp.core.TestTags
+import com.asad.coffeeitapp.core.ui.ConfigStatusBar
 import com.asad.coffeeitapp.extra.screen.noRippleClickable
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @Composable
@@ -129,23 +131,5 @@ fun SplashScreenContent(navController: NavController) {
                 textDecoration = TextDecoration.Underline,
             )
         }
-    }
-}
-
-enum class PhonePosition {
-    Start, End
-}
-
-@Composable
-fun ConfigStatusBar(useDarkIcons: Boolean? = null) {
-    val systemUiController = rememberSystemUiController()
-
-    val isThemeLight: Boolean = !isSystemInDarkTheme()
-
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons ?: isThemeLight,
-        )
     }
 }

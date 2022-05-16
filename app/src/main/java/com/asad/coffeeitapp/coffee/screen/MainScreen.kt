@@ -22,8 +22,8 @@ import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
 import com.asad.coffeeitapp.core.TestTags
 import com.asad.coffeeitapp.core.UiState
 import com.asad.coffeeitapp.core.ui.CoffeeCardItem
+import com.asad.coffeeitapp.core.ui.ConfigStatusBar
 import com.asad.coffeeitapp.extra.screen.noRippleClickable
-import com.asad.coffeeitapp.splash.screen.ConfigStatusBar
 
 @Composable
 fun MainScreen(
