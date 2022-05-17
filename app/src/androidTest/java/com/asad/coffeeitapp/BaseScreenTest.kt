@@ -8,6 +8,7 @@ import com.asad.coffeeitapp.core.di.Util
 import com.asad.coffeeitapp.core.ui.theme.CoffeeITAppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import kotlinx.coroutines.InternalCoroutinesApi
+import okhttp3.HttpUrl
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -27,6 +28,10 @@ open class BaseScreenTest {
     fun setUp() {
         hiltRule.inject()
         mockWebServer.start(Util.URL_PORT)
+        val httpUrl: HttpUrl = mockWebServer.url("/coffee-machine/60ba1ab72e35f2d9c786c610")
+        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        println(httpUrl)
+        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     }
 
     @After
