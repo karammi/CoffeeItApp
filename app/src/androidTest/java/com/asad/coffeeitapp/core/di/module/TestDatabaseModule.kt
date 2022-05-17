@@ -6,15 +6,15 @@ import androidx.test.core.app.ApplicationProvider
 import com.asad.coffeeitapp.core.db.CoffeeItDatabase
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 
 @Module
-@InstallIn(SingletonComponent::class)
-// @TestInstallIn(
-//    components = [SingletonComponent::class],
-//    replaces = [DatabaseModule::class]
-// )
+// @InstallIn(SingletonComponent::class)
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [DatabaseModule::class]
+)
 // @UninstallModules(DatabaseModule::class)
 object TestDatabaseModule {
     @Provides

@@ -28,7 +28,8 @@ class CoffeeMachineRemoteDataSourceImplTest {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(mockWebServer.url("localhost:8080"))
+//        .baseUrl(mockWebServer.url("localhost:8080"))
+        .baseUrl(mockWebServer.url("https://localhost::8080"))
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
@@ -51,6 +52,7 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch coffee machine info should return success response`() = runBlocking {
         // arrange
         mockWebServer.enqueueResponse("success_response_200.json", code = 200)
+//        mockWebServer.takeRequest()
         val expected = Result.Success(data = ACTUAL_VALUE)
 
         // act

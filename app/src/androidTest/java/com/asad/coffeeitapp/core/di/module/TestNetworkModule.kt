@@ -6,8 +6,8 @@ import com.asad.coffeeitapp.core.di.Util
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+// @InstallIn(SingletonComponent::class)
 // @UninstallModules(NetworkModule::class)
-// @TestInstallIn(
-//    components = [SingletonComponent::class],
-//    replaces = [NetworkModule::class]
-// )
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [NetworkModule::class]
+)
 object TestNetworkModule {
 
     @Provides
@@ -63,6 +63,7 @@ object TestNetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl("${Util.BASE_URL_TEST}${Util.URL_PORT}")
+//            .baseUrl("/")
             .client(client)
             .addConverterFactory(moshiConverterFactory)
             .build()

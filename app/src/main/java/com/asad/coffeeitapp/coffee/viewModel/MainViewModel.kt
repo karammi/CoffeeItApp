@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.UiState
+import com.asad.coffeeitapp.core.data
 import com.asad.coffeeitapp.core.di.module.DispatcherProvider
 import com.asad.coffeeitapp.domain.model.ExtraModel
 import com.asad.coffeeitapp.domain.model.SizeModel
@@ -29,6 +30,9 @@ class MainViewModel @Inject constructor(
     init {
         viewModelScope.launch(dispatcherProvider.main) {
             val response = repository.fetchCoffeeMachineInfo(id = "60ba1ab72e35f2d9c786c610")
+
+            Log.e("TEST", "##############################################")
+            Log.e("TEST", response.data.toString())
             when (response) {
                 is Result.Error -> {
                     Log.d(TAG, response.apiErrorBody.message.toString())
