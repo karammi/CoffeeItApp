@@ -28,7 +28,7 @@ class MainViewModelTest {
         viewModel = MainViewModel(fakeRepository, testDispatcher)
     }
 
-    ///todo refactor test to check empty state of the mainUiState
+    // todo refactor test to check empty state of the mainUiState
     @Test
     fun `select coffee should be available in the ui state`() = runBlocking {
         viewModel.uiState.asStateFlow().test {

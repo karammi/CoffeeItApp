@@ -3,6 +3,7 @@ package com.asad.coffeeitapp.data.dataSource.remote
 import com.asad.coffeeitapp.core.ApiErrorBody
 import com.asad.coffeeitapp.core.CustomErrorHandler
 import com.asad.coffeeitapp.core.Result
+import com.asad.coffeeitapp.core.di.Util
 import com.asad.coffeeitapp.core.enqueueResponse
 import com.asad.coffeeitapp.data.dataSource.remote.model.*
 import com.google.common.truth.Truth.assertThat
@@ -12,6 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -19,29 +21,51 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 class CoffeeMachineRemoteDataSourceImplTest {
-    private val mockWebServer = MockWebServer()
+    private lateinit var mockWebServer: MockWebServer
 
-    private val client = OkHttpClient.Builder()
-        .connectTimeout(1, TimeUnit.SECONDS)
-        .readTimeout(1, TimeUnit.SECONDS)
-        .writeTimeout(1, TimeUnit.SECONDS)
-        .build()
+    private lateinit var client: OkHttpClient
 
-    private val retrofit = Retrofit.Builder()
-//        .baseUrl(mockWebServer.url("localhost:8080"))
-        .baseUrl(mockWebServer.url("https://localhost::8080"))
-        .client(client)
-        .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
-        .build()
+    private lateinit var retrofit: Retrofit
 
-    private val api = retrofit.create(CoffeeMachineAPI::class.java)
+    private lateinit var api: CoffeeMachineAPI
 
-    private val converter: Converter<ResponseBody, ApiErrorBody> =
-        retrofit.responseBodyConverter(ApiErrorBody::class.java, arrayOf())
+    private lateinit var converter: Converter<ResponseBody, ApiErrorBody>
 
-    private val customErrorHandler = CustomErrorHandler(converter)
+    private lateinit var customErrorHandler: CustomErrorHandler
 
-    private val sut = CoffeeMachineRemoteDataSourceImpl(api, customErrorHandler)
+    private lateinit var sut: CoffeeMachineRemoteDataSource
+
+    @Before
+    fun setup() {
+
+        mockWebServer = MockWebServer()
+//        mockWebServer.url()
+
+        client = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
+            .build()
+        retrofit = Retrofit.Builder()
+//      .baseUrl(mockWebServer.url("localhost:8080"))
+//        .baseUrl(mockWebServer.url("https://localhost::8080"))
+            .baseUrl(mockWebServer.url("/"))
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+            .build()
+
+        api = retrofit.create(CoffeeMachineAPI::class.java)
+
+        converter =
+            retrofit.responseBodyConverter(ApiErrorBody::class.java, arrayOf())
+
+        customErrorHandler = CustomErrorHandler(converter)
+
+//        mockWebServer.start("${Util.BASE_URL_TEST}${Util.URL_PORT}")
+//        sut = CoffeeMachineRemoteDataSourceImpl(api, customErrorHandler)
+//        sut = FakeCoffeeMachineRemoteDataSourceImpl()
+        sut = CoffeeMachineRemoteDataSourceImpl(api, customErrorHandler)
+    }
 
     @After
     fun teardown() {
@@ -52,11 +76,12 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch coffee machine info should return success response`() = runBlocking {
         // arrange
         mockWebServer.enqueueResponse("success_response_200.json", code = 200)
-//        mockWebServer.takeRequest()
+//        val request = mockWebServer.takeRequest()
         val expected = Result.Success(data = ACTUAL_VALUE)
 
         // act
         val actual = sut.fetchCoffeeMachineInfo("60ba1ab72e35f2d9c786c610")
+//        val actual = sut.fetchCoffeeMachineInfo("")
 
         // assert
         assertThat(actual).isEqualTo(expected)
@@ -66,6 +91,7 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch coffee machine with serverError 500 should return ApiError`() {
         // arrange
         mockWebServer.enqueueResponse("server_error_response_500.json", 500)
+//        val request = mockWebServer.takeRequest()
         val errorResult = ApiErrorBody(statusCode = "500", message = "Internal server error")
         val expectedValue = Result.Error(errorResult)
 
@@ -82,6 +108,7 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch incorrect url should return ApiError 404`() {
         // arrange
         mockWebServer.enqueueResponse("error_response_404.json", 404)
+//        val request = mockWebServer.takeRequest()
         val errorResult = ApiErrorBody(
             statusCode = "404",
             message = "Cannot GET /coffee-machin/60ba1ab72e35f2d9c786c610",

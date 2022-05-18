@@ -3,7 +3,11 @@ package com.asad.coffeeitapp
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import app.cash.turbine.test
+import com.asad.coffeeitapp.coffee.screen.MainScreen
 import com.asad.coffeeitapp.coffee.viewModel.MainUiState
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
 import com.asad.coffeeitapp.core.TestTags
@@ -36,7 +40,7 @@ class BrewScenarioTest {
 
     lateinit var server: MockWebServer
 
-    lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     @Before
     fun setup() {
@@ -82,10 +86,26 @@ class BrewScenarioTest {
 
         composeRule.onAllNodesWithContentDescription("coffee")
             .assertAll(hasContentDescription("coffee"))
-
         composeRule.onAllNodesWithContentDescription("coffee")[0].assertIsDisplayed()
         composeRule.onAllNodesWithContentDescription("coffee")[0].performClick()
+    }
 
-
+    @Test
+    fun testSecond() {
+        composeRule.setContent {
+//            CoffeeITAppTheme {
+//                CoffeeItGraph {
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController,
+                startDestination = Screen.MainScreen.route
+            ) {
+                composable(route = Screen.MainScreen.route) {
+                    MainScreen(navController = navController)
+                }
+            }
+//                }
+//            }
+        }
     }
 }
