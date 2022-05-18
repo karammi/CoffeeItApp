@@ -10,13 +10,17 @@ import com.squareup.moshi.Moshi
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.FileReader
 import java.util.concurrent.TimeUnit
 
 class CoffeeMachineRemoteDataSourceImplTest {
@@ -78,8 +82,6 @@ class CoffeeMachineRemoteDataSourceImplTest {
         // Request received by the mock server
         val request = mockWebServer.takeRequest()
 
-//        val actual = sut.fetchCoffeeMachineInfo("")
-
         // assert
         assertThat(request.path).isEqualTo("/coffee-machine/60ba1ab72e35f2d9c786c610")
         assertThat(actual).isEqualTo(expected)
@@ -89,7 +91,6 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch coffee machine with serverError 500 should return ApiError`() {
         // arrange
         mockWebServer.enqueueResponse("server_error_response_500.json", 500)
-//        val request = mockWebServer.takeRequest()
         val errorResult = ApiErrorBody(statusCode = "500", message = "Internal server error")
         val expectedValue = Result.Error(errorResult)
 
@@ -106,7 +107,6 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch incorrect url should return ApiError 404`() {
         // arrange
         mockWebServer.enqueueResponse("error_response_404.json", 404)
-//        val request = mockWebServer.takeRequest()
         val errorResult = ApiErrorBody(
             statusCode = "404",
             message = "Cannot GET /coffee-machin/60ba1ab72e35f2d9c786c610",
