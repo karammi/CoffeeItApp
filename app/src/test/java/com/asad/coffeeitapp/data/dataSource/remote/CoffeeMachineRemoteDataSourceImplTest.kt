@@ -3,7 +3,6 @@ package com.asad.coffeeitapp.data.dataSource.remote
 import com.asad.coffeeitapp.core.ApiErrorBody
 import com.asad.coffeeitapp.core.CustomErrorHandler
 import com.asad.coffeeitapp.core.Result
-import com.asad.coffeeitapp.core.di.Util
 import com.asad.coffeeitapp.core.enqueueResponse
 import com.asad.coffeeitapp.data.dataSource.remote.model.*
 import com.google.common.truth.Truth.assertThat
@@ -47,8 +46,6 @@ class CoffeeMachineRemoteDataSourceImplTest {
             .writeTimeout(1, TimeUnit.SECONDS)
             .build()
         retrofit = Retrofit.Builder()
-//      .baseUrl(mockWebServer.url("localhost:8080"))
-//        .baseUrl(mockWebServer.url("https://localhost::8080"))
             .baseUrl(mockWebServer.url("/"))
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
@@ -61,9 +58,6 @@ class CoffeeMachineRemoteDataSourceImplTest {
 
         customErrorHandler = CustomErrorHandler(converter)
 
-//        mockWebServer.start("${Util.BASE_URL_TEST}${Util.URL_PORT}")
-//        sut = CoffeeMachineRemoteDataSourceImpl(api, customErrorHandler)
-//        sut = FakeCoffeeMachineRemoteDataSourceImpl()
         sut = CoffeeMachineRemoteDataSourceImpl(api, customErrorHandler)
     }
 
@@ -76,14 +70,18 @@ class CoffeeMachineRemoteDataSourceImplTest {
     fun `fetch coffee machine info should return success response`() = runBlocking {
         // arrange
         mockWebServer.enqueueResponse("success_response_200.json", code = 200)
-//        val request = mockWebServer.takeRequest()
+
         val expected = Result.Success(data = ACTUAL_VALUE)
 
         // act
         val actual = sut.fetchCoffeeMachineInfo("60ba1ab72e35f2d9c786c610")
+        // Request received by the mock server
+        val request = mockWebServer.takeRequest()
+
 //        val actual = sut.fetchCoffeeMachineInfo("")
 
         // assert
+        assertThat(request.path).isEqualTo("/coffee-machine/60ba1ab72e35f2d9c786c610")
         assertThat(actual).isEqualTo(expected)
     }
 
