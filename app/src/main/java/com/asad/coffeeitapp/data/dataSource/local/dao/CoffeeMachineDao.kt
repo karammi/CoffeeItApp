@@ -13,6 +13,6 @@ interface CoffeeMachineDao {
     @Delete
     suspend fun deleteCoffeeMachine(coffeeMachineEntity: CoffeeMachineEntity)
 
-    @Query("SELECT * FROM ${CoffeeMachineConstants.TABLE_NAME} WHERE ${CoffeeMachineConstants.COFFEE_MACHINE_ID} : = {id}")
+    @Query("SELECT * FROM ${CoffeeMachineConstants.TABLE_NAME} WHERE ${CoffeeMachineConstants.COFFEE_MACHINE_ID} = :id")
     suspend fun fetchCoffeeMachine(id: Int): CoffeeMachineEntity
 }

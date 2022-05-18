@@ -1,6 +1,7 @@
 package com.asad.coffeeitapp.core.di.module
 
 import com.asad.coffeeitapp.BuildConfig
+import com.asad.coffeeitapp.core.ApiErrorBody
 import com.asad.coffeeitapp.core.di.Util
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -8,7 +9,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -59,4 +62,10 @@ object NetworkModule {
             .addConverterFactory(moshiConverterFactory)
             .build()
     }
+
+    @Provides
+    fun provideRetrofitConvertor(retrofit: Retrofit): Converter<ResponseBody, ApiErrorBody> {
+        return retrofit.responseBodyConverter(ApiErrorBody::class.java, arrayOf())
+    }
+
 }
