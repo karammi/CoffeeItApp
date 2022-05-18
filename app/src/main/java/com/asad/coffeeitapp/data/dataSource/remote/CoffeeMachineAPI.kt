@@ -7,8 +7,11 @@ import retrofit2.http.Path
 interface CoffeeMachineAPI {
 
     @GET("/")
-    suspend fun checkDeviceConnection()
+    suspend fun checkDeviceConnection(): String
 
-    @GET("/coffee_machine/{id}")
+    @GET("/coffee-machine/{id}")
     suspend fun fetchCoffeeMachineInfo(@Path("id") id: String): CoffeeMachineResponseModel
 }
+
+
+

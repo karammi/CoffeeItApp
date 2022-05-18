@@ -23,4 +23,5 @@ abstract class CoffeeMachineBinderModule {
 
     @Binds
     abstract fun bindCoffeeMachineRepository(coffeeMachineRepository: CoffeeMachineRepositoryImpl): CoffeeMachineRepository
+
 }
