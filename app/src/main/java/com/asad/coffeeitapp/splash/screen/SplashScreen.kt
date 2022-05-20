@@ -1,8 +1,18 @@
 package com.asad.coffeeitapp.splash.screen
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -94,35 +104,43 @@ fun SplashScreenContent(navController: NavController) {
         ) {
 
             Text(
-                text = "Tab the machine to start", modifier = Modifier.padding(16.dp).weight(0.2f),
+                text = "Tab the machine to start", modifier = Modifier
+                    .padding(16.dp)
+                    .weight(0.2f),
                 color = Color.Black,
                 fontWeight = FontWeight.Normal,
                 fontSize = 24.sp
             )
             Box(
-                modifier = Modifier.fillMaxWidth().weight(0.6f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.6f)
                     .noRippleClickable { navController.navigate(Screen.MainScreen.route) }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_coffee_machine),
                     contentDescription = TestTags.Splash_Screen_CoffeeMachine,
-                    modifier = Modifier.align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
                         .requiredWidth(screenWidth.times(0.95f)),
                     contentScale = ContentScale.FillBounds,
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_nfc_device),
                     contentDescription = TestTags.Splash_Screen_NFC,
-                    modifier = Modifier.align(Alignment.CenterEnd).graphicsLayer {
-                        translationX = phoneTranslationX
-                    }
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .graphicsLayer {
+                            translationX = phoneTranslationX
+                        }
                 )
             }
 
             Text(
                 text = "How does this work",
                 fontStyle = FontStyle.Italic,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 24.dp)
                     .weight(0.2f)
                     .align(alignment = Alignment.CenterHorizontally)

@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "MAIN_VIEW_MODEL"
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: CoffeeMachineRepository,

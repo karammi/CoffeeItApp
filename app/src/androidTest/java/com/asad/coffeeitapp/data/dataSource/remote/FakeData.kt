@@ -1,7 +1,15 @@
 package com.asad.coffeeitapp.data.dataSource.remote
 
-import com.asad.coffeeitapp.data.dataSource.remote.model.*
-import com.asad.coffeeitapp.domain.model.*
+import com.asad.coffeeitapp.data.dataSource.remote.model.CoffeeMachineResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.ExtraResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.SizeResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.SubSelectionResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.TypeResponseModel
+import com.asad.coffeeitapp.domain.model.CoffeeMachineModel
+import com.asad.coffeeitapp.domain.model.ExtraModel
+import com.asad.coffeeitapp.domain.model.SizeModel
+import com.asad.coffeeitapp.domain.model.SubSelectionModel
+import com.asad.coffeeitapp.domain.model.TypeModel
 
 object FakeData {
     val FakeCoffeeMachineResponse = CoffeeMachineResponseModel(

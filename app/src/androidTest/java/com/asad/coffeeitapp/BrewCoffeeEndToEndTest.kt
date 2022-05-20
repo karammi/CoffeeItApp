@@ -4,7 +4,6 @@ import androidx.activity.viewModels
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import app.cash.turbine.test
@@ -51,7 +50,6 @@ class BrewCoffeeEndToEndTest {
     fun setUp() {
         hiltRule.inject()
         mockWebServer = MockWebServer()
-//        mockWebServer.useHttps( .localhost().socketFactory, false);
         mockWebServer.start(port = 8080)
 
         composeRule.setContent {

@@ -11,10 +11,10 @@ object FileReader {
         try {
             val inputStream =
                 (
-                    InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-                    ).assets.open(
-                    fileName
-                )
+                        InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+                        ).assets.open(
+                        fileName
+                    )
 
             val builder = StringBuilder()
             val reader = InputStreamReader(inputStream, "UTF-8")

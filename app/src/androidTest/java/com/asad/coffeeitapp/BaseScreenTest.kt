@@ -29,9 +29,6 @@ open class BaseScreenTest {
         hiltRule.inject()
         mockWebServer.start(Util.URL_PORT)
         val httpUrl: HttpUrl = mockWebServer.url("/coffee-machine/60ba1ab72e35f2d9c786c610")
-        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        println(httpUrl)
-        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     }
 
     @After
