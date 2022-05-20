@@ -1,6 +1,10 @@
 package com.asad.coffeeitapp.coffee
 
-import com.asad.coffeeitapp.domain.model.*
+import com.asad.coffeeitapp.domain.model.CoffeeMachineModel
+import com.asad.coffeeitapp.domain.model.ExtraModel
+import com.asad.coffeeitapp.domain.model.SizeModel
+import com.asad.coffeeitapp.domain.model.SubSelectionModel
+import com.asad.coffeeitapp.domain.model.TypeModel
 
 val COFFEE_MACHINE_FAKE = CoffeeMachineModel(
     id = "60ba1ab72e35f2d9c786c610",

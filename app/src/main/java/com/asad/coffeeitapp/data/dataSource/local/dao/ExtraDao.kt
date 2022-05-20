@@ -1,6 +1,10 @@
 package com.asad.coffeeitapp.data.dataSource.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.asad.coffeeitapp.data.dataSource.local.entity.ExtraEntity
 import com.asad.coffeeitapp.data.dataSource.local.util.ExtraConstants
 

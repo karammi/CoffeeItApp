@@ -2,7 +2,11 @@ package com.asad.coffeeitapp.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.asad.coffeeitapp.data.dataSource.local.entity.*
+import com.asad.coffeeitapp.data.dataSource.local.entity.CoffeeMachineEntity
+import com.asad.coffeeitapp.data.dataSource.local.entity.ExtraEntity
+import com.asad.coffeeitapp.data.dataSource.local.entity.SizeEntity
+import com.asad.coffeeitapp.data.dataSource.local.entity.SubSelectionEntity
+import com.asad.coffeeitapp.data.dataSource.local.entity.TypeEntity
 
 @Database(
     entities = [
