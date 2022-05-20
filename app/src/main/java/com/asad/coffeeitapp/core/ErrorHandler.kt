@@ -3,15 +3,7 @@ package com.asad.coffeeitapp.core
 import androidx.lifecycle.MutableLiveData
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.flow.MutableStateFlow
-import okhttp3.ResponseBody
-import retrofit2.Converter
-import retrofit2.HttpException
-import java.io.IOException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import javax.inject.Inject
-
-/*{"statusCode":404,"message":"Cannot GET /coffee_machine/60ba1ab72e35f2d9c786c610","error":"Not Found"}*/
 
 @JsonClass(generateAdapter = true)
 data class ApiErrorBody(
@@ -90,28 +82,3 @@ inline fun <reified T> Result<T>.updateOnSuccess(stateFlow: MutableStateFlow<T>)
         stateFlow.value = data
     }
 }
-
-// @OptIn(ExperimentalContracts::class)
-// @SinceKotlin("1.3")
-// inline fun <T, O> Result<T>.map(transform: (value: T) -> O): Result<O> {
-//    contract {
-//        callsInPlace(transform, InvocationKind.AT_MOST_ONCE)
-//    }
-//    return when (this) {
-//        is Result.Error -> Result.Error(ApiErrorBody())
-//        Result.Loading -> Result.Loading
-//        is Result.Success -> Result.Success(data = transform(value as T))
-//    }
-//    return if (this is Result.Success)
-//        Result.Success(transform(mainObject as T))
-//    else
-//        Result.Error(ApiErrorBody())
-// }
-
-// @SinceKotlin("1.3")
-// public inline fun <R, T> Result<T>.map(transform: (value: T) -> R): Result<R> {
-//    return when {
-//        Result.Success -> Result.Success(transform(value as T))
-//        else -> Result(value)
-//    }
-// }
