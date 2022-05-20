@@ -1,6 +1,5 @@
 package com.asad.coffeeitapp.data.dataSource.remote
 
-import com.asad.coffeeitapp.core.CustomErrorHandler
 import com.asad.coffeeitapp.core.ErrorHandler
 import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.data.dataSource.remote.model.CoffeeMachineResponseModel

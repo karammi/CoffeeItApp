@@ -2,12 +2,14 @@ package com.asad.coffeeitapp.coffee.screen
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.asad.coffeeitapp.MainActivity
 import com.asad.coffeeitapp.Screen
+import com.asad.coffeeitapp.core.TestTags
 import com.asad.coffeeitapp.core.di.module.DatabaseModule
 import com.asad.coffeeitapp.core.di.module.NetworkModule
 import com.asad.coffeeitapp.core.ui.theme.CoffeeITAppTheme
@@ -45,6 +47,6 @@ class MainScreenTest {
 
     @Test
     fun clickedToggleCoffee_isVisible() {
-        composeRule.onNodeWithText("Select your Style").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(TestTags.MAIN_SCREEN_TITLE).assertIsDisplayed()
     }
 }

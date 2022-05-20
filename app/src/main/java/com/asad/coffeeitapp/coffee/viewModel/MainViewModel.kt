@@ -1,6 +1,5 @@
 package com.asad.coffeeitapp.coffee.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asad.coffeeitapp.core.Result
@@ -28,17 +27,18 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(dispatcherProvider.main) {
-            val response = repository.fetchCoffeeMachineInfo(id = "60ba1ab72e35f2d9c786c610")
-            when (response) {
+
+            when (
+                val response =
+                    repository.fetchCoffeeMachineInfo(id = "60ba1ab72e35f2d9c786c610")
+            ) {
                 is Result.Error -> {
-                    Log.d(TAG, response.apiErrorBody.message.toString())
                     uiState.emit(value = uiState.value.copy(coffeeMachine = UiState.Error(response.apiErrorBody.message!!)))
                 }
                 Result.Loading -> {
                     uiState.emit(value = uiState.value.copy(coffeeMachine = UiState.Loading))
                 }
                 is Result.Success -> {
-                    Log.d(TAG, response.data.toString())
                     uiState.emit(value = uiState.value.copy(coffeeMachine = UiState.Success(response.data)))
                 }
             }

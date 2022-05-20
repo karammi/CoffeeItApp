@@ -1,23 +1,23 @@
 package com.asad.coffeeitapp
 
+import androidx.activity.viewModels
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import app.cash.turbine.test
-import com.asad.coffeeitapp.coffee.viewModel.MainUiState
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
+import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.TestTags
-import com.asad.coffeeitapp.core.di.Util
-import com.asad.coffeeitapp.core.di.module.DatabaseModule
-import com.asad.coffeeitapp.core.di.module.NetworkModule
-import com.asad.coffeeitapp.core.enqueueResponse
 import com.asad.coffeeitapp.core.ui.theme.CoffeeITAppTheme
-import com.asad.coffeeitapp.data.dataSource.remote.CoffeeMachineAPI
-import com.google.common.truth.Truth
+import com.asad.coffeeitapp.data.dataSource.remote.FakeData
+import com.asad.coffeeitapp.data.dataSource.remote.SuccessDispatcher
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.runBlocking
@@ -26,56 +26,121 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, NetworkModule::class)
 class BrewCoffeeEndToEndTest {
 
-    //    private lateinit var mockWebServer: MockWebServer
-    val mockWebServer by lazy { MockWebServer() }
-
-    @get:Rule
+    @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule
+    @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
 
-    @Inject
-    lateinit var api: CoffeeMachineAPI
+    private lateinit var mockWebServer: MockWebServer
 
-    @Inject
-    lateinit var viewModel: MainViewModel
-
-    @Before
-    fun setup() {
-        mockWebServer.start(port = Util.URL_PORT)
-        hiltRule.inject()
-        composeRule.setContent {
-            CoffeeITAppTheme {
-                CoffeeItGraph()
-            }
-        }
-    }
+    private lateinit var viewModel: MainViewModel
 
     @After
     fun teardown() {
         mockWebServer.shutdown()
     }
 
-    @Test
-    fun testBrewCoffee() = runBlocking {
+    @ExperimentalMaterialApi
+    @InternalCoroutinesApi
+    @Before
+    fun setUp() {
+        hiltRule.inject()
+        mockWebServer = MockWebServer()
+//        mockWebServer.useHttps( .localhost().socketFactory, false);
+        mockWebServer.start(port = 8080)
 
-        mockWebServer.enqueueResponse("success_response_200.json", code = 200)
+        composeRule.setContent {
+            viewModel = composeRule.activity.viewModels<MainViewModel>().value
+            CoffeeITAppTheme {
+                CoffeeItGraph()
+            }
+        }
+    }
+
+    @Test
+    @InternalCoroutinesApi
+    fun brewACoffee() {
+        mockWebServer.url("/coffee-machine/60ba1ab72e35f2d9c786c610")
+        mockWebServer.dispatcher = SuccessDispatcher()
+
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_CoffeeMachine)
             .assertIsDisplayed()
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).assertIsDisplayed()
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).performClick()
-//        viewModel.uiState.asStateFlow().test {
-//            val emission = awaitItem()
-//            Truth.assertThat(emission).isEqualTo(MainUiState())
-//            cancelAndConsumeRemainingEvents()
+//        mockWebServer.takeRequest()
+        val expectedValue = Result.Success(data = FakeData.FakeCoffeeMachine)
+//        val request = mockWebServer.takeRequest()
+        runBlocking {
+            delay(5000)
+            viewModel.uiState.asStateFlow().test {
+//                awaitItem()
+                val emission = awaitItem()
+//                assertThat(request.path).isEqualTo("/coffee-machine/60ba1ab72e35f2d9c786c610")
+                assertThat(emission).isEqualTo(viewModel.uiState.value)
+            }
+        }
+
+//        val job = launch {
+//            viewModel.uiState.asStateFlow().test {
+//                awaitItem()
+//                val emission = awaitItem()
+//                assertThat(emission.coffeeMachine).isEqualTo(FakeData.FakeCoffeeMachine)
+// //                cancelAndConsumeRemainingEvents()
+//            }
 //        }
-//        delay(5000)
+// //        viewModel.uiState.emit(value = MainUiState(coffeeMachine = UiState.Success(value = FakeData.FakeCoffeeMachine)))
+//        job.join()
+//        IdlingRegistry.getInstance().register(OkHttp3IdlingResource.create("okhttp", okHttp))
     }
+
+//    @get:Rule(order = 0)
+//    val hiltRule = HiltAndroidRule(this)
+//
+//    @get:Rule(order = 1)
+//    val composeRule = createAndroidComposeRule<MainActivity>()
+//
+//    private val mockWebServer = MockWebServer()
+//
+//    private lateinit var viewModel: MainViewModel
+
+/*    @InternalCoroutinesApi
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        mockWebServer.start(Util.URL_PORT)
+        composeRule.setContent {
+            viewModel = hiltViewModel()
+            CoffeeITAppTheme {
+                CoffeeItGraph()
+            }
+        }
+    }*/
+
+    /*@Test
+    fun brewCoffee() = runBlocking {
+//        mockWebServer.enqueueResponse("success_response_200.json", code = 200)
+
+//        val response = MockResponse().setResponseCode(200).setBody("{}")
+//        mockWebServer.enqueue(response)
+
+        composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_CoffeeMachine)
+            .assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).performClick()
+
+        composeRule.onNodeWithContentDescription(TestTags.MAIN_SCREEN_TITLE).assertIsDisplayed()
+        val job = launch {
+            viewModel.uiState.asStateFlow().test {
+                val emission = awaitItem()
+                cancelAndConsumeRemainingEvents()
+            }
+        }
+        viewModel.uiState.emit(value = MainUiState(coffeeMachine = UiState.Success(value = FakeData.FakeCoffeeMachine)))
+        job.join()
+    }*/
 }
