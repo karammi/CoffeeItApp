@@ -4,23 +4,23 @@ import com.asad.coffeeitapp.core.ApiErrorBody
 import com.asad.coffeeitapp.core.CustomErrorHandler
 import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.enqueueResponse
-import com.asad.coffeeitapp.data.dataSource.remote.model.*
+import com.asad.coffeeitapp.data.dataSource.remote.model.CoffeeMachineResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.ExtraResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.SizeResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.SubSelectionResponseModel
+import com.asad.coffeeitapp.data.dataSource.remote.model.TypeResponseModel
 import com.google.common.truth.Truth.assertThat
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.io.FileReader
 import java.util.concurrent.TimeUnit
 
 class CoffeeMachineRemoteDataSourceImplTest {
