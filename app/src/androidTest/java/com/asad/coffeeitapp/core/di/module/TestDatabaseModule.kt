@@ -10,17 +10,13 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 
 @Module
-// @InstallIn(SingletonComponent::class)
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [DatabaseModule::class]
 )
-// @UninstallModules(DatabaseModule::class)
 object TestDatabaseModule {
     @Provides
-    fun provideCoffeeItDatabase(
-//        @ApplicationContext context: Context,
-    ): CoffeeItDatabase {
+    fun provideCoffeeItDatabase(): CoffeeItDatabase {
         val context = ApplicationProvider.getApplicationContext<Context>()
 
         return Room.inMemoryDatabaseBuilder(context, CoffeeItDatabase::class.java)

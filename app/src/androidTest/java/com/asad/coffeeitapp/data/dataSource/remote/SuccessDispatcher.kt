@@ -9,9 +9,5 @@ class SuccessDispatcher : Dispatcher() {
     override fun dispatch(request: RecordedRequest): MockResponse {
         return MockResponse().setResponseCode(200)
             .setBody(FileReader.readString("success_response_200.json"))
-//        return when (request.path) {
-//            "" -> MockResponse().setResponseCode(200).setBody("{}")
-//            else -> MockResponse().setResponseCode(404).setBody("{}")
-//        }
     }
 }

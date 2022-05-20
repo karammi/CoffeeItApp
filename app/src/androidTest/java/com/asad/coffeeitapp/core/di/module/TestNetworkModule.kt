@@ -17,8 +17,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-// @InstallIn(SingletonComponent::class)
-// @UninstallModules(NetworkModule::class)
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [NetworkModule::class]
@@ -62,8 +60,9 @@ object TestNetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
 //            .baseUrl("${Util.BASE_URL_TEST}${Util.URL_PORT}")
-            .baseUrl("http://localhost:8080/")
-//            .baseUrl("/")
+//            .baseUrl("")
+//            .baseUrl("https://localhost:8080/")
+            .baseUrl("https://127.0.0.1:8080/")
             .client(client)
             .addConverterFactory(moshiConverterFactory)
             .build()

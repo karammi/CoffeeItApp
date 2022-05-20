@@ -1,21 +1,26 @@
 package com.asad.coffeeitapp
 
+import androidx.activity.viewModels
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
-import androidx.hilt.navigation.compose.hiltViewModel
+import app.cash.turbine.test
 import com.asad.coffeeitapp.coffee.viewModel.MainViewModel
+import com.asad.coffeeitapp.core.Result
 import com.asad.coffeeitapp.core.TestTags
-import com.asad.coffeeitapp.core.di.Util
 import com.asad.coffeeitapp.core.ui.theme.CoffeeITAppTheme
+import com.asad.coffeeitapp.data.dataSource.remote.FakeData
 import com.asad.coffeeitapp.data.dataSource.remote.SuccessDispatcher
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.runBlocking
-import okhttp3.HttpUrl
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -25,27 +30,15 @@ import org.junit.Test
 @HiltAndroidTest
 class BrewCoffeeEndToEndTest {
 
-    @get:Rule
+    @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
-//    val hiltRule by lazy { HiltAndroidRule(this) }
 
-    @get:Rule
+    @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
-//    val composeRule by lazy { createAndroidComposeRule<MainActivity>() }
 
-    //    val mockWebServer by lazy { MockWebServer() }
-    val mockWebServer = MockWebServer()
-    lateinit var viewModel: MainViewModel
+    private lateinit var mockWebServer: MockWebServer
 
-    @Before
-    fun setUp() {
-        hiltRule.inject()
-        mockWebServer.start(Util.URL_PORT)
-        val httpUrl: HttpUrl = mockWebServer.url("/coffee-machine/60ba1ab72e35f2d9c786c610")
-        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        println(httpUrl)
-        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    }
+    private lateinit var viewModel: MainViewModel
 
     @After
     fun teardown() {
@@ -54,29 +47,44 @@ class BrewCoffeeEndToEndTest {
 
     @ExperimentalMaterialApi
     @InternalCoroutinesApi
-    fun setMainContent() {
+    @Before
+    fun setUp() {
+        hiltRule.inject()
+        mockWebServer = MockWebServer()
+//        mockWebServer.useHttps( .localhost().socketFactory, false);
+        mockWebServer.start(port = 8080)
+
         composeRule.setContent {
-            viewModel = hiltViewModel()
+            viewModel = composeRule.activity.viewModels<MainViewModel>().value
             CoffeeITAppTheme {
                 CoffeeItGraph()
             }
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Test
     @InternalCoroutinesApi
-    fun brewACoffee() = runBlocking {
+    fun brewACoffee() {
+        mockWebServer.url("/coffee-machine/60ba1ab72e35f2d9c786c610")
         mockWebServer.dispatcher = SuccessDispatcher()
-
-        setMainContent()
-
-        mockWebServer.takeRequest()
 
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_CoffeeMachine)
             .assertIsDisplayed()
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).assertIsDisplayed()
         composeRule.onNodeWithContentDescription(TestTags.Splash_Screen_NFC).performClick()
+//        mockWebServer.takeRequest()
+        val expectedValue = Result.Success(data = FakeData.FakeCoffeeMachine)
+//        val request = mockWebServer.takeRequest()
+        runBlocking {
+            delay(5000)
+            viewModel.uiState.asStateFlow().test {
+//                awaitItem()
+                val emission = awaitItem()
+//                assertThat(request.path).isEqualTo("/coffee-machine/60ba1ab72e35f2d9c786c610")
+                assertThat(emission).isEqualTo(viewModel.uiState.value)
+            }
+        }
+
 //        val job = launch {
 //            viewModel.uiState.asStateFlow().test {
 //                awaitItem()
