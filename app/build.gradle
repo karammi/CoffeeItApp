@@ -133,7 +133,7 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    debugImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+//    debugImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 
     // Local unit tests
     testImplementation "androidx.test:core:1.4.0"
@@ -144,8 +144,8 @@ dependencies {
 
     def mockk = "1.12.2"
 
-    testImplementation "io.mockk:mockk:$mockk"
-    testImplementation "io.mockk:mockk-agent-jvm:$mockk"
+//    testImplementation "io.mockk:mockk:$mockk"
+//    testImplementation "io.mockk:mockk-agent-jvm:$mockk"
 
     debugImplementation "androidx.compose.ui:ui-test-manifest:1.2.0-beta01"
 
@@ -159,8 +159,8 @@ dependencies {
     androidTestImplementation 'androidx.test:core-ktx:1.4.0'
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 //    androidTestImplementation "io.mockk:mockk-android:1.10.5"
-    androidTestImplementation "io.mockk:mockk:$mockk"
-    androidTestImplementation "io.mockk:mockk-agent-jvm:$mockk"
+//    androidTestImplementation "io.mockk:mockk:$mockk"
+//    androidTestImplementation "io.mockk:mockk-agent-jvm:$mockk"
 
     androidTestImplementation 'androidx.test:runner:1.4.0'
 

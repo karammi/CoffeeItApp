@@ -20,10 +20,10 @@ import org.junit.Test
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class, NetworkModule::class)
 class SplashScreenKtTest {
-    @get:Rule
+    @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule
+    @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Before

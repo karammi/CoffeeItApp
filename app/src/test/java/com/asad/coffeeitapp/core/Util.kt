@@ -12,8 +12,7 @@ fun MockWebServer.enqueueResponse(fileName: String, code: Int) {
     try {
         val source = inputStream?.let { inputStream.source().buffer() }
         enqueue(
-            MockResponse()
-                .setResponseCode(code = code)
+            MockResponse().setResponseCode(code = code)
                 .setBody(source!!.readString(StandardCharsets.UTF_8))
         )
     } catch (ex: Exception) {
