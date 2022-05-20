@@ -130,7 +130,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         modifier = Modifier
                             .fillMaxWidth()
                             .requiredHeight(90.dp)
-                            .clickable {
+                            .noRippleClickable {
                             },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(
@@ -194,7 +194,7 @@ fun OverviewScreenContent(navController: NavController, mainViewModel: MainViewM
                         modifier = Modifier
                             .fillMaxWidth()
                             .requiredHeight(90.dp)
-                            .clickable {
+                            .noRippleClickable {
                             },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(
