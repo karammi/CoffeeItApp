@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.asad.coffeeitapp.core.db.CoffeeItDatabase
 import com.asad.coffeeitapp.core.di.Util
+import com.asad.coffeeitapp.data.dataSource.local.dao.SizeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +22,9 @@ object DatabaseModule {
         Room.databaseBuilder(context, CoffeeItDatabase::class.java, Util.DATA_BASE_NAME)
             .build()
 
+    @Provides
+    fun provideSizeDao(database: CoffeeItDatabase): SizeDao {
+        return database.provideSizeDao()
+    }
 
 }

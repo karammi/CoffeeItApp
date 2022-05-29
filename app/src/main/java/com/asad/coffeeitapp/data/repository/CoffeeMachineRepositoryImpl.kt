@@ -2,6 +2,7 @@ package com.asad.coffeeitapp.data.repository
 
 import com.asad.coffeeitapp.core.ResponseMapper
 import com.asad.coffeeitapp.core.Result
+import com.asad.coffeeitapp.data.dataSource.local.CoffeeMachineLocalDataSource
 import com.asad.coffeeitapp.data.dataSource.local.entity.CoffeeMachineEntity
 import com.asad.coffeeitapp.data.dataSource.local.entity.ExtraEntity
 import com.asad.coffeeitapp.data.dataSource.local.entity.SizeEntity
@@ -20,15 +21,19 @@ import javax.inject.Inject
 // @ViewModelScoped
 class CoffeeMachineRepositoryImpl @Inject constructor(
     private val coffeeMachineRemoteDataSource: CoffeeMachineRemoteDataSource,
-//    private val coffeeMachineLocalDataSource: CoffeeMachineLocalDataSource,
+    private val coffeeMachineLocalDataSource: CoffeeMachineLocalDataSource,
 //    private val coffeeMachineResponseMapper: CoffeeMachineResponseMapper,
+    private val coffeeMachineModelToDataBaseEntityMapper: CoffeeMachineModelToDataBaseEntityMapper,
 ) : CoffeeMachineRepository {
     override suspend fun fetchCoffeeMachineInfo(id: String): Result<CoffeeMachineModel> {
         return when (val response = coffeeMachineRemoteDataSource.fetchCoffeeMachineInfo(id)) {
             is Result.Error -> Result.Error(response.apiErrorBody)
             Result.Loading -> Result.Loading
             is Result.Success -> {
-                Result.Success(response.data.mapper())
+                val result = response.data.mapper()
+                coffeeMachineLocalDataSource.insertCoffeeMachine(
+                    coffeeMachineModelToDataBaseEntityMapper.mapToModel(result))
+                Result.Success(result)
             }
         }
     }

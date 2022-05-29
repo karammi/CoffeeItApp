@@ -1,18 +1,28 @@
 package com.asad.coffeeitapp.data.dataSource.local
 
+import com.asad.coffeeitapp.data.dataSource.local.dao.SizeDao
 import com.asad.coffeeitapp.data.dataSource.local.entity.CoffeeMachineEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 // @ViewModelScoped
 class CoffeeMachineLocalDataSourceImpl @Inject constructor(
 //    private val coffeeMachineDao: CoffeeMachineDao,
 //    private val typeDao: TypeDao,
-//    private val sizeDao: SizeDao,
+    private val sizeDao: SizeDao,
 //    private val extraDao: ExtraDao,
 //    private val subSelectionDao: SubSelectionDao,
 ) : CoffeeMachineLocalDataSource {
 
     override suspend fun insertCoffeeMachine(coffeeMachineEntity: CoffeeMachineEntity) {
+        withContext(Dispatchers.IO) {
+            coffeeMachineEntity.sizeEntities?.forEach {
+                sizeDao.insertSize(it)
+            }
+        }
+
+
 /*        withContext(Dispatchers.IO) {
             val sizeList = coffeeMachineEntity.sizeEntities
             if (sizeList != null) {
