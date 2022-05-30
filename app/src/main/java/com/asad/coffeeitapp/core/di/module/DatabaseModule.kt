@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.asad.coffeeitapp.core.db.CoffeeItDatabase
 import com.asad.coffeeitapp.core.di.Util
 import com.asad.coffeeitapp.data.dataSource.local.dao.SizeDao
+import com.asad.coffeeitapp.data.dataSource.local.dao.SubSelectionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,11 @@ object DatabaseModule {
     @Provides
     fun provideSizeDao(database: CoffeeItDatabase): SizeDao {
         return database.provideSizeDao()
+    }
+
+    @Provides
+    fun provideSubSelectionDao(database: CoffeeItDatabase): SubSelectionDao {
+        return database.provideSubSelectionDao()
     }
 
 }

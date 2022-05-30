@@ -18,11 +18,9 @@ import com.asad.coffeeitapp.domain.model.TypeModel
 import com.asad.coffeeitapp.domain.repository.CoffeeMachineRepository
 import javax.inject.Inject
 
-// @ViewModelScoped
 class CoffeeMachineRepositoryImpl @Inject constructor(
     private val coffeeMachineRemoteDataSource: CoffeeMachineRemoteDataSource,
     private val coffeeMachineLocalDataSource: CoffeeMachineLocalDataSource,
-//    private val coffeeMachineResponseMapper: CoffeeMachineResponseMapper,
     private val coffeeMachineModelToDataBaseEntityMapper: CoffeeMachineModelToDataBaseEntityMapper,
 ) : CoffeeMachineRepository {
     override suspend fun fetchCoffeeMachineInfo(id: String): Result<CoffeeMachineModel> {
@@ -43,11 +41,24 @@ class CoffeeMachineRepositoryImpl @Inject constructor(
     }
 }
 
-class CoffeeMachineModelToDataBaseEntityMapper @Inject constructor() :
+class CoffeeMachineModelToDataBaseEntityMapper @Inject constructor(
+    private val typeModelToDataBaseEntityMapper: TypeModelToDataBaseEntityMapper,
+    private val sizeModelToDataBaseEntityMapper: SizeModelToDataBaseEntityMapper,
+    private val extraModelToDataBaseEntityMapper: ExtraModelToDataBaseEntityMapper,
+) :
     ResponseMapper<CoffeeMachineEntity, CoffeeMachineModel> {
     override fun mapToModel(model: CoffeeMachineModel): CoffeeMachineEntity {
         return CoffeeMachineEntity(
             model.id,
+            typeEntities = model.typeModels.map {
+                typeModelToDataBaseEntityMapper.mapToModel(it)
+            },
+            sizeEntities = model.sizeModels.map {
+                sizeModelToDataBaseEntityMapper.mapToModel(it)
+            },
+            extraEntities = model.extraModels.map {
+                extraModelToDataBaseEntityMapper.mapToModel(it)
+            }
         )
     }
 
@@ -104,7 +115,10 @@ class ExtraModelToDataBaseEntityMapper @Inject constructor(
     override fun mapToModel(model: ExtraModel): ExtraEntity {
         return ExtraEntity(
             model.id,
-            model.name
+            model.name,
+            subSelectionEntities = model.subSelectionModels.map {
+                mapper.mapToModel(it)
+            }
         )
     }
 

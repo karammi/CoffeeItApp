@@ -1,6 +1,7 @@
 package com.asad.coffeeitapp.data.dataSource.local
 
 import com.asad.coffeeitapp.data.dataSource.local.dao.SizeDao
+import com.asad.coffeeitapp.data.dataSource.local.dao.SubSelectionDao
 import com.asad.coffeeitapp.data.dataSource.local.entity.CoffeeMachineEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,16 +13,21 @@ class CoffeeMachineLocalDataSourceImpl @Inject constructor(
 //    private val typeDao: TypeDao,
     private val sizeDao: SizeDao,
 //    private val extraDao: ExtraDao,
-//    private val subSelectionDao: SubSelectionDao,
+    private val subSelectionDao: SubSelectionDao,
 ) : CoffeeMachineLocalDataSource {
 
     override suspend fun insertCoffeeMachine(coffeeMachineEntity: CoffeeMachineEntity) {
+        println("${coffeeMachineEntity.sizeEntities}")
         withContext(Dispatchers.IO) {
             coffeeMachineEntity.sizeEntities?.forEach {
                 sizeDao.insertSize(it)
             }
+            coffeeMachineEntity.extraEntities?.forEach { currentExtra ->
+                currentExtra.subSelectionEntities?.forEach { currentSubSelection ->
+                    subSelectionDao.insertSubSelection(currentSubSelection)
+                }
+            }
         }
-
 
 /*        withContext(Dispatchers.IO) {
             val sizeList = coffeeMachineEntity.sizeEntities
